@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dt87.mapper.NoticeMapper">
+    <select id="findNotice" resultType="com.dt87.entity.Notice">
+        select * from sys_notice
+        <where>
+            <if test="notice != null">
+                <if test="notice.title != null and notice.title != ''">
+                    and title like '%${notice.title}%'
+                </if>
+                <if test="notice.id != null ">
+                    and id = #{notice.id}
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <insert id="addNotice" parameterType="com.dt87.entity.Notice">
+        insert into sys_notice (title,content,createtime,opername) value
+        (#{notice.title},#{notice.content},#{notice.createtime},#{notice.opername})
+    </insert>
+
+    <update id="updateNotice" parameterType="com.dt87.entity.Notice">
+        update sys_notice set title = #{notice.title},content=#{notice.content} where id = #{notice.id}
+    </update>
+
+    <delete id="deleteNotice">
+        delete from sys_notice where id = #{id}
+    </delete>
+
+    <delete id="deleteNotices" parameterType="List">
+        delete from sys_notice where id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

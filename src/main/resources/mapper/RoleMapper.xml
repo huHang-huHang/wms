@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dt87.mapper.RoleMapper">
+    <select id="findRoleByName" resultType="com.dt87.entity.Role">
+        select * from sys_role_user ru
+        left join sys_role u on ru.rid = u.id
+        where ru.uid = #{id}
+    </select>
+</mapper>
